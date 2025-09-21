@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estas flores son para ti</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(to top, #0a0a1a, #1a1a2e);
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    h1 {
+      margin-top: 5vh;
+      font-size: 6vw;
+      color: #ffd700;
+      text-shadow: 0 0 10px #ffd700, 0 0 20px #ffcc00;
+      animation: glow 2s infinite alternate;
+      text-align: center;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ffd700; }
+      to { text-shadow: 0 0 25px #ffea00, 0 0 40px #ffd700; }
+    }
+    .flower.big {
+      font-size: 20vw; /* Flor grande */
+      margin: 3vh 0 1vh 0;
+      animation: sway 4s infinite ease-in-out;
+    }
+    h2 {
+      font-size: 8vw;
+      color: #ffd700;
+      text-shadow: 0 0 15px #ffd700, 0 0 30px #ffaa00;
+      margin: 0 0 2vh 0;
+      animation: glow 2s infinite alternate;
+      text-align: center;
+    }
+    .poem {
+      font-size: 5vw;
+      color: #fff6b0;
+      text-shadow: 0 0 10px #ffd700, 0 0 25px #ffaa00;
+      text-align: center;
+      margin: 1vh 5vw 4vh 5vw;
+      line-height: 1.5;
+    }
+    .garden {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr); /* 9 columnas fijas */
+      gap: 10px;
+      width: 100%;
+      padding: 2vh;
+      position: absolute;
+      bottom: 0;
+    }
+    .flower {
+      font-size: 7vw;
+      text-align: center;
+      animation: sway 3s infinite ease-in-out;
+    }
+    @keyframes sway {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-5px) rotate(2deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+    .floating {
+      position: absolute;
+      font-size: 7vw;
+      animation: floatUp 3s ease-out forwards;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-200px); opacity: 0; }
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+    }
+    .shooting-star {
+      position: absolute;
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, #ffd700, transparent);
+      opacity: 0.8;
+      transform: rotate(45deg);
+      animation: shoot 3s linear infinite;
+    }
+    @keyframes shoot {
+      0% { transform: translate(-150px, -150px) rotate(45deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translate(100vw, 100vh) rotate(45deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Estas flores son para ti</h1>
+  <div class="flower big">🌻</div>
+  <h2>María Quintana Vélez</h2>
+
+  <div class="poem">
+    Te regalo estas flores,<br>
+    porque eres como un jardín,<br>
+    da clic en la pantalla<br>
+    y verás las flores volar sin fin.
+  </div>
+
+  <div class="garden" id="garden"></div>
+
+  <!-- Estrellas -->
+  <script>
+    // Crear estrellas fijas
+    for (let i = 0; i < 80; i++) {
+      let star = document.createElement("div");
+      star.className = "star";
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(star);
+    }
+
+    // Crear estrellas fugaces
+    function createShootingStar() {
+      let star = document.createElement("div");
+      star.className = "shooting-star";
+      star.style.top = Math.random() * window.innerHeight / 2 + "px";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(star);
+      setTimeout(() => { star.remove(); }, 3000);
+    }
+    setInterval(createShootingStar, 2500);
+
+    // Llenar el jardín con flores 🌻
+    const garden = document.getElementById("garden");
+    const totalFlores = 9 * 6; // 9 columnas * 6 filas completas
+    for (let i = 0; i < totalFlores; i++) {
+      let flower = document.createElement("div");
+      flower.className = "flower";
+      flower.textContent = "🌻";
+      garden.appendChild(flower);
+    }
+
+    // Flores interactivas al tocar/clic
+    document.addEventListener("click", (e) => {
+      let f = document.createElement("div");
+      f.className = "floating";
+      f.style.left = e.pageX + "px";
+      f.style.top = e.pageY + "px";
+      f.textContent = "🌻";
+      document.body.appendChild(f);
+      setTimeout(() => f.remove(), 3000);
+    });
+  </script>
+</body>
+</html>
